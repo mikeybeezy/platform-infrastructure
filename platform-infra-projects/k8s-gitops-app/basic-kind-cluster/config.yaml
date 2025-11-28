@@ -5,30 +5,19 @@ name: ha-cluster
 nodes:
 - role: control-plane
   kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
   # adds a taint when adding an additional Node to the control plane.
   - | 
-  kind: JoinConfiguration
-  nodeRegistration:
-    kubeletExtraArgs:
-      register-with-taints: "my-taint=presence:NoSchedule"
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        register-with-taints: "my-taint=presence:NoSchedule"
 # add a mount from /path/to/my/files on the host to /files on the node  
   # extraMounts:
   # - hostPath: /path/to/my/files
   #   containerPath: /files
-  lables:
-    tier: backend
 
-    
 - role: worker
 # add a mount from /path/to/my/files on the host to /files on the node  
   # extraMounts:
   # - hostPath: /path/to/my/files
   #   containerPath: /files
-  lables:
-    tier: frontend
-
